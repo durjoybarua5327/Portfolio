@@ -1,15 +1,54 @@
 @import "tailwindcss";
 
 @theme {
-  --color-background: 240 10% 3.9%;
-  --color-foreground: 0 0% 98%;
-  --color-primary: 263.4 70% 50.4%;
-  /* Add others if needed or use defined colors */
+  --color-background: #03040B;
+  /* Very dark, almost black */
+  --color-foreground: #F8FAFC;
+
+  --color-primary: #12DAC3;
+  /* The Mint/Teal color */
+  --color-primary-foreground: #000000;
+
+  --color-secondary: #0F172A;
+  /* Dark Slate */
+  --color-secondary-foreground: #F8FAFC;
+
+  --color-accent: #38bdf8;
+  /* Light Blue for gradients */
+  --color-accent-foreground: #000000;
+
+  --color-card: #0F111A;
+  --color-card-foreground: #F8FAFC;
+
+  --color-border: #1E293B;
+  --color-input: #1E293B;
+  --color-ring: #12DAC3;
 }
 
-/* Re-add custom classes later */
-html,
-body {
-  background-color: rgb(var(--background));
-  color: rgb(var(--foreground));
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 80px;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+/* Utilities */
+@layer components {
+  .glass {
+    @apply bg-white/5 backdrop-blur-lg border border-white/10;
+  }
+
+  .glass-card {
+    @apply bg-[#11121C]/80 backdrop-blur-xl border border-white/5 shadow-2xl;
+  }
+
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-linear-to-r from-[var(--color-primary)] to-[var(--color-accent)];
+  }
 }

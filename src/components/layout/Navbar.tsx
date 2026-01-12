@@ -5,14 +5,13 @@ import Link from "next/link";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
+import Button from "@/components/ui/Button";
 
 const navItems = [
-    { name: "Home", href: "#home" },
     { name: "About", href: "#about" },
     { name: "Skills", href: "#skills" },
     { name: "Projects", href: "#projects" },
     { name: "Experience", href: "#experience" },
-    { name: "Contact", href: "#contact" },
 ];
 
 export default function Navbar() {
@@ -21,7 +20,7 @@ export default function Navbar() {
 
     useEffect(() => {
         const handleScroll = () => {
-            setScrolled(window.scrollY > 50);
+            setScrolled(window.scrollY > 20);
         };
         window.addEventListener("scroll", handleScroll);
         return () => window.removeEventListener("scroll", handleScroll);
@@ -30,34 +29,43 @@ export default function Navbar() {
     return (
         <nav
             className={cn(
-                "fixed top-0 w-full z-50 transition-all duration-300 border-b border-transparent",
-                scrolled ? "bg-background/80 backdrop-blur-md border-white/10" : "bg-transparent"
+                "fixed top-0 w-full z-50 transition-all duration-300",
+                scrolled ? "bg-background/50 backdrop-blur-xl border-b border-white/5 py-3" : "bg-transparent py-5"
             )}
         >
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="flex items-center justify-between h-16">
+                <div className="flex items-center justify-between">
+
+                    {/* Logo */}
                     <div className="flex-shrink-0">
-                        <Link href="#home" className="text-xl font-bold text-foreground hover:text-primary transition-colors">
-                            Portfolio
+                        <Link href="#home" className="text-2xl font-bold tracking-tighter text-foreground">
+                            PM<span className="text-primary">.</span>
                         </Link>
                     </div>
-                    <div className="hidden md:block">
-                        <div className="ml-10 flex items-baseline space-x-8">
+
+                    {/* Desktop Nav */}
+                    <div className="hidden md:flex items-center space-x-8">
+                        <div className="flex space-x-6">
                             {navItems.map((item) => (
                                 <Link
                                     key={item.name}
                                     href={item.href}
-                                    className="text-muted-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                                    className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
                                 >
                                     {item.name}
                                 </Link>
                             ))}
                         </div>
+                        <Button variant="primary" size="sm" onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}>
+                            Contact Me
+                        </Button>
                     </div>
+
+                    {/* Mobile Menu Button */}
                     <div className="md:hidden">
                         <button
                             onClick={() => setIsOpen(!isOpen)}
-                            className="text-foreground focus:outline-none p-2"
+                            className="text-foreground p-2 hover:bg-white/10 rounded-full transition-colors"
                             aria-label="Toggle menu"
                         >
                             {isOpen ? <X size={24} /> : <Menu size={24} />}
@@ -66,25 +74,29 @@ export default function Navbar() {
                 </div>
             </div>
 
+            {/* Mobile Menu */}
             <AnimatePresence>
                 {isOpen && (
                     <motion.div
                         initial={{ opacity: 0, height: 0 }}
                         animate={{ opacity: 1, height: "auto" }}
                         exit={{ opacity: 0, height: 0 }}
-                        className="md:hidden bg-background border-b border-white/10 overflow-hidden"
+                        className="md:hidden bg-[#0A0B14] border-b border-white/10 overflow-hidden absolute w-full"
                     >
-                        <div className="px-4 pt-4 pb-6 space-y-2">
+                        <div className="px-5 pt-4 pb-8 space-y-4 flex flex-col">
                             {navItems.map((item) => (
                                 <Link
                                     key={item.name}
                                     href={item.href}
                                     onClick={() => setIsOpen(false)}
-                                    className="text-foreground block px-3 py-3 rounded-md text-base font-medium hover:bg-white/5 transition-colors"
+                                    className="text-foreground/80 hover:text-primary text-lg font-medium transition-colors"
                                 >
                                     {item.name}
                                 </Link>
                             ))}
+                            <div className="pt-4">
+                                <Button className="w-full" onClick={() => { setIsOpen(false); document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }); }}>Contact Me</Button>
+                            </div>
                         </div>
                     </motion.div>
                 )}

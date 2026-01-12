@@ -45,14 +45,16 @@ async function getData() {
       skills: [
         { id: '1', name: 'React', category: 'frontend' },
         { id: '2', name: 'Next.js', category: 'frontend' },
-        { id: '3', name: 'TypeScript', category: 'frontend' },
-        { id: '4', name: 'Node.js', category: 'backend' },
-        { id: '5', name: 'TailwindCSS', category: 'frontend' },
+        { id: '3', name: 'TailwindCSS', category: 'frontend' },
+        { id: '4', name: 'Framer Motion', category: 'frontend' },
+        { id: '5', name: 'Node.js', category: 'backend' },
         { id: '6', name: 'Supabase', category: 'backend' },
         { id: '7', name: 'PostgreSQL', category: 'backend' },
-        { id: '8', name: 'Framer Motion', category: 'frontend' },
-        { id: '9', name: 'Git', category: 'tools' },
-        { id: '10', name: 'Figma', category: 'tools' },
+        { id: '8', name: 'Express', category: 'backend' },
+        { id: '9', name: 'TypeScript', category: 'other' },
+        { id: '10', name: 'JavaScript', category: 'other' },
+        { id: '11', name: 'Python', category: 'other' },
+        { id: '12', name: 'Git', category: 'tools' },
       ] as Skill[],
       experience: [
         {
