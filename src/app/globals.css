@@ -17,6 +17,9 @@
   /* Light Blue for gradients */
   --color-accent-foreground: #000000;
 
+  --color-muted: #1E293B;
+  --color-muted-foreground: #94A3B8;
+
   --color-card: #0F111A;
   --color-card-foreground: #F8FAFC;
 

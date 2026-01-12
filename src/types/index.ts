@@ -21,4 +21,5 @@ export interface Skill {
     id: string;
     name: string;
     category: "frontend" | "backend" | "tools" | "other";
+    level?: number; // Optional proficiency level (0-100)
 }

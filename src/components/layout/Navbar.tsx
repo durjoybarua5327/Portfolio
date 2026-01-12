@@ -26,6 +26,17 @@ export default function Navbar() {
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
+    const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+        e.preventDefault();
+        const targetId = href.replace('#', '');
+        const element = document.getElementById(targetId);
+        if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+            // Optional: Update URL hash without scroll jump
+            window.history.pushState({}, '', href);
+        }
+    };
+
     return (
         <nav
             className={cn(
@@ -38,8 +49,13 @@ export default function Navbar() {
 
                     {/* Logo */}
                     <div className="flex-shrink-0">
-                        <Link href="#home" className="text-2xl font-bold tracking-tighter text-foreground">
-                            PM<span className="text-primary">.</span>
+                        <Link
+                            href="#home"
+                            onClick={(e) => handleNavClick(e, '#home')}
+                            className="text-2xl font-bold tracking-tighter hover:scale-105 transition-transform duration-300 block"
+                        >
+                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-primary to-accent">Durjoy Barua</span>
+                            <span className="text-primary text-3xl">.</span>
                         </Link>
                     </div>
 
@@ -47,13 +63,14 @@ export default function Navbar() {
                     <div className="hidden md:flex items-center space-x-8">
                         <div className="flex space-x-6">
                             {navItems.map((item) => (
-                                <Link
+                                <a
                                     key={item.name}
                                     href={item.href}
-                                    className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
+                                    onClick={(e) => handleNavClick(e, item.href)}
+                                    className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors cursor-pointer"
                                 >
                                     {item.name}
-                                </Link>
+                                </a>
                             ))}
                         </div>
                         <Button variant="primary" size="sm" onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}>
@@ -85,14 +102,14 @@ export default function Navbar() {
                     >
                         <div className="px-5 pt-4 pb-8 space-y-4 flex flex-col">
                             {navItems.map((item) => (
-                                <Link
+                                <a
                                     key={item.name}
                                     href={item.href}
-                                    onClick={() => setIsOpen(false)}
-                                    className="text-foreground/80 hover:text-primary text-lg font-medium transition-colors"
+                                    onClick={(e) => { setIsOpen(false); handleNavClick(e, item.href); }}
+                                    className="text-foreground/80 hover:text-primary text-lg font-medium transition-colors cursor-pointer"
                                 >
                                     {item.name}
-                                </Link>
+                                </a>
                             ))}
                             <div className="pt-4">
                                 <Button className="w-full" onClick={() => { setIsOpen(false); document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }); }}>Contact Me</Button>
