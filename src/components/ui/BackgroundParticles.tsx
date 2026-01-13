@@ -62,7 +62,7 @@ export default function BackgroundParticles() {
 
         const init = () => {
             particles = [];
-            const particleCount = Math.min(window.innerWidth * 0.05, 100); // Responsive count
+            const particleCount = Math.min(window.innerWidth * 0.15, 300); // Increased responsive count
             for (let i = 0; i < particleCount; i++) {
                 particles.push(new Particle());
             }
