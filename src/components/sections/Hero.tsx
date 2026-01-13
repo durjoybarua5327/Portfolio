@@ -8,7 +8,7 @@ import Spline from '@splinetool/react-spline';
 
 export default function Hero() {
     return (
-        <Section id="home" className="pt-10 pb-10 md:pt-32 md:pb-32 overflow-hidden">
+        <Section id="home" className="pt-4 pb-6 md:pt-20 md:pb-16 overflow-hidden">
             {/* Background Particles/Glow */}
             <div className="absolute inset-0 -z-10 overflow-hidden">
                 <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/20 rounded-full blur-[120px] opacity-20 animate-pulse" />

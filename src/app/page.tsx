@@ -11,7 +11,7 @@ export const revalidate = 3600; // Revalidate every hour
 
 async function getData() {
   // Supabase fetch block commented out to prevent "Supabase error" warnings
-  // untill you configure your .env.local keys.
+  // untill you configure your .env keys.
   /*
   try {
     const { data: projects, error: projectsError } = await supabase.from('projects').select('*').order('created_at', { ascending: false });

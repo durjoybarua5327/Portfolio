@@ -19,7 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="scroll-smooth">
-      <body className={`${inter.variable} font-sans antialiased bg-background text-foreground`}>
+      <body className={`${inter.variable} font-sans antialiased bg-background text-foreground`} suppressHydrationWarning>
         <ScrollReset />
         <BackgroundParticles />
         <Navbar />

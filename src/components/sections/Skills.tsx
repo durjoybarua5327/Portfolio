@@ -17,11 +17,11 @@ export default function Skills({ skills }: SkillsProps) {
         'Languages & Tools': skills.filter(s => s.category === 'tools' || s.category === 'other'),
     };
 
-    // Category colors for visual distinction
+    // Category colors for visual distinction - matching home page vibe
     const categoryColors = {
-        'Frontend': 'from-cyan-500 to-blue-500',
-        'Backend': 'from-emerald-500 to-teal-500',
-        'Languages & Tools': 'from-purple-500 to-pink-500',
+        'Frontend': 'from-primary to-accent',
+        'Backend': 'from-accent to-primary',
+        'Languages & Tools': 'from-primary via-accent to-primary',
     };
 
     const categoryIcons = {
@@ -31,7 +31,7 @@ export default function Skills({ skills }: SkillsProps) {
     };
 
     return (
-        <Section id="skills" className="!pt-12">
+        <Section id="skills" className="!pt-1">
 
 
             <div className="px-4">
@@ -59,8 +59,16 @@ export default function Skills({ skills }: SkillsProps) {
                             transition={{ delay: idx * 0.15, duration: 0.5 }}
                             className="group relative"
                         >
-                            {/* Gradient border effect */}
-                            <div className={`absolute -inset-0.5 bg-gradient-to-r ${categoryColors[category as keyof typeof categoryColors]} rounded-2xl opacity-0 group-hover:opacity-100 blur transition duration-500`} />
+                            {/* Animated circulating gradient border effect */}
+                            <div className="absolute -inset-[2px] rounded-2xl opacity-75 group-hover:opacity-100 blur-sm transition duration-500 overflow-hidden">
+                                <div
+                                    className={`absolute inset-0 bg-gradient-conic ${categoryColors[category as keyof typeof categoryColors]} animate-spin-slow`}
+                                    style={{
+                                        background: `conic-gradient(from 0deg, transparent 0%, var(--color-primary) 25%, var(--color-accent) 50%, var(--color-primary) 75%, transparent 100%)`,
+                                        animationDuration: '4s'
+                                    }}
+                                />
+                            </div>
 
                             {/* Main card */}
                             <div className="relative glass-card p-5 md:p-6 rounded-2xl border border-white/10 hover:border-white/20 transition-all duration-300 h-full flex flex-col">

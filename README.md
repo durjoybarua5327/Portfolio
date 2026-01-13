@@ -28,9 +28,9 @@ A modern, responsive, and production-ready portfolio built with Next.js (App Rou
    ```
 
 3. **Configure Environment Variables**:
-   Copy `.env.example` to `.env.local` and add your Supabase credentials.
+   Copy `.env.example` to `.env` and add your Supabase credentials.
    ```bash
-   cp .env.example .env.local
+   cp .env.example .env
    ```
    
    If you don't have Supabase set up yet, the app will use mock data automatically.

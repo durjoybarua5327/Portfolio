@@ -6,7 +6,7 @@ import Image from "next/image";
 
 export default function About() {
     return (
-        <Section id="about">
+        <Section id="about" className="!pb-2">
             <h2 className="text-3xl md:text-5xl font-bold mb-12 text-center">About Me</h2>
             <div className="grid md:grid-cols-2 gap-12 items-center">
                 <motion.div
