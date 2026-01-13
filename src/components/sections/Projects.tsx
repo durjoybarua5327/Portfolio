@@ -66,7 +66,7 @@ export default function Projects({ projects }: ProjectsProps) {
                 </p>
             </motion.div>
 
-            <div className="relative w-full max-w-6xl mx-auto px-4 group/carousel">
+            <div className="relative w-full max-w-5xl mx-auto px-4 group/carousel">
                 {/* Navigation Arrows */}
                 <button
                     onClick={() => scroll('left')}
@@ -94,7 +94,7 @@ export default function Projects({ projects }: ProjectsProps) {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: index * 0.1, duration: 0.5 }}
-                            className="relative min-w-[220px] sm:min-w-[240px] lg:min-w-[260px] snap-center sm:snap-start group h-full"
+                            className="relative min-w-[85vw] sm:min-w-[calc(50%-12px)] lg:min-w-[calc(33.333%-16px)] snap-center sm:snap-start group h-full"
                         >
 
                             {/* Animated circulating gradient border - Reverse Spin with Page Colors */}
