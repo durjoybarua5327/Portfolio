@@ -4,6 +4,7 @@ import Section from "@/components/ui/Section";
 import Button from "@/components/ui/Button";
 import { Project } from "@/types";
 import { motion } from "framer-motion";
+import Image from "next/image";
 import { ExternalLink, Github, ChevronLeft, ChevronRight } from "lucide-react";
 import { useRef } from "react";
 
@@ -93,7 +94,7 @@ export default function Projects({ projects }: ProjectsProps) {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: index * 0.1, duration: 0.5 }}
-                            className="relative min-w-[100%] md:min-w-[calc(50%-12px)] lg:min-w-[calc(33.333%-16px)] snap-start group"
+                            className="relative min-w-[220px] sm:min-w-[240px] lg:min-w-[260px] snap-center sm:snap-start group h-full"
                         >
 
                             {/* Animated circulating gradient border - Reverse Spin with Page Colors */}
@@ -114,59 +115,69 @@ export default function Projects({ projects }: ProjectsProps) {
                             {/* Card Content */}
                             <div className="relative h-full glass-card rounded-2xl overflow-hidden border border-white/10 hover:border-white/20 transition-all duration-300 flex flex-col bg-background/50 backdrop-blur-xl z-10">
 
-                                {/* Image / Preview Area - now horizontal on top */}
-                                <div className="relative h-40 sm:h-48 bg-gradient-to-br from-primary/10 to-accent/10 overflow-hidden group-hover:from-primary/20 group-hover:to-accent/20 transition-colors duration-500">
-                                    <div className="absolute inset-0 bg-gradient-to-t from-background/90 to-transparent z-10" />
-                                    <div className="absolute inset-0 flex items-center justify-center text-muted-foreground z-0">
-                                        <div className="text-center p-4">
-                                            <div className="text-4xl mb-2 group-hover:scale-110 transition-transform duration-300">🚀</div>
-                                            <p className="text-xs opacity-60 font-medium tracking-wider uppercase">Project Preview</p>
+                                {/* Image / Preview Area */}
+                                <div className="relative h-32 sm:h-40 w-full bg-black/5 overflow-hidden group-hover:from-primary/20 group-hover:to-accent/20 transition-colors duration-500">
+                                    {project.image_url ? (
+                                        <Image
+                                            src={project.image_url}
+                                            alt={project.title}
+                                            fill
+                                            className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                        />
+                                    ) : (
+                                        <div className="absolute inset-0 flex items-center justify-center text-muted-foreground z-0">
+                                            <div className="text-center p-4">
+                                                <div className="text-3xl mb-2 group-hover:scale-110 transition-transform duration-300">🚀</div>
+                                                <p className="text-[10px] opacity-60 font-medium tracking-wider uppercase">Project Preview</p>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                                    )}
+                                    {/* Subtle Overlay only on hover */}
+                                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
                                 </div>
 
                                 {/* Content Body */}
-                                <div className="flex flex-col flex-1 p-5">
-                                    <h3 className="text-xl font-bold mb-3 bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text group-hover:text-primary transition-colors">
+                                <div className="flex flex-col flex-1 p-4">
+                                    <h3 className="text-lg font-bold mb-2 bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text group-hover:text-primary transition-colors">
                                         {project.title}
                                     </h3>
 
-                                    <p className="text-muted-foreground text-sm leading-relaxed mb-4 flex-1 line-clamp-3">
+                                    <p className="text-muted-foreground text-xs leading-relaxed mb-4 flex-1 line-clamp-3">
                                         {project.description}
                                     </p>
 
                                     {/* Technologies */}
-                                    <div className="flex flex-wrap gap-2 mb-6">
+                                    <div className="flex flex-wrap gap-1.5 mb-5">
                                         {project.technologies.slice(0, 4).map((tech) => (
                                             <span
                                                 key={tech}
-                                                className="text-[10px] px-2.5 py-1 bg-primary/5 text-primary/90 rounded-full border border-primary/10"
+                                                className="text-[10px] px-2 py-0.5 bg-primary/5 text-primary/90 rounded-full border border-primary/10"
                                             >
                                                 {tech}
                                             </span>
                                         ))}
                                         {project.technologies.length > 4 && (
-                                            <span className="text-[10px] px-2.5 py-1 bg-white/5 text-muted-foreground rounded-full border border-white/10">
+                                            <span className="text-[10px] px-2 py-0.5 bg-white/5 text-muted-foreground rounded-full border border-white/10">
                                                 +{project.technologies.length - 4}
                                             </span>
                                         )}
                                     </div>
 
                                     {/* Actions */}
-                                    <div className="flex gap-3 mt-auto">
+                                    <div className="flex gap-2 mt-auto">
                                         {project.repo_url && (
                                             <a href={project.repo_url} target="_blank" rel="noopener noreferrer" className="flex-1">
-                                                <Button variant="outline" size="sm" className="w-full gap-2 text-xs font-medium h-9 border-white/10 hover:border-primary/50 hover:bg-primary/5">
-                                                    <Github size={14} />
-                                                    Code
+                                                <Button variant="outline" size="sm" className="w-full gap-2 text-[10px] font-medium h-8 border-white/10 hover:border-primary/50 hover:bg-primary/5">
+                                                    <Github size={12} />
+                                                    Github Code
                                                 </Button>
                                             </a>
                                         )}
                                         {project.demo_url && (
                                             <a href={project.demo_url} target="_blank" rel="noopener noreferrer" className="flex-1">
-                                                <Button size="sm" className="w-full gap-2 text-xs font-medium h-9 bg-primary/90 hover:bg-primary shadow-lg shadow-primary/20">
-                                                    <ExternalLink size={14} />
+                                                <Button size="sm" className="w-full gap-2 text-[10px] font-medium h-8 bg-primary/90 hover:bg-primary shadow-lg shadow-primary/20">
+                                                    <ExternalLink size={12} />
                                                     Live
                                                 </Button>
                                             </a>
