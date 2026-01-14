@@ -64,14 +64,18 @@ export default function Navbar() {
 
                     {/* Logo */}
                     <div className="flex-shrink-0">
-                        <Link
+                        <a
                             href="#home"
-                            className="text-2xl font-bold tracking-tighter hover:scale-105 transition-transform duration-300 block"
-                            onClick={() => setIsOpen(false)}
+                            className="text-2xl font-bold tracking-tighter hover:scale-105 transition-transform duration-300 block cursor-pointer"
+                            onClick={(e) => {
+                                e.preventDefault();
+                                window.scrollTo({ top: 0, behavior: 'smooth' });
+                                setIsOpen(false);
+                            }}
                         >
                             <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-primary to-accent">Durjoy Barua</span>
                             <span className="text-primary text-3xl">.</span>
-                        </Link>
+                        </a>
                     </div>
 
                     {/* Desktop Nav */}
