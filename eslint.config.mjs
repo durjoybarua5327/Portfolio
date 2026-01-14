@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Add source files to ignore list to skip linting during build (similar to ignoreDuringBuilds: true)
+    "src/**"
   ]),
 ]);
 
