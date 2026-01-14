@@ -10,8 +10,23 @@ import { Project, Skill, Experience as ExperienceType, About as AboutType, HeroD
 export const revalidate = 60; // Revalidate every minute so Admin changes show up quickly
 
 async function getData() {
+  // Check if Supabase is configured. If not, return mock data immediately to prevent build hangs.
+  const isConfigured = process.env.NEXT_PUBLIC_SUPABASE_URL &&
+    process.env.NEXT_PUBLIC_SUPABASE_URL !== 'https://placeholder.supabase.co' &&
+    !process.env.NEXT_PUBLIC_SUPABASE_URL.includes('placeholder');
+
+  if (!isConfigured) {
+    console.log("Supabase not configured (using mock data).");
+    throw new Error("MockDataFallback");
+  }
+
   try {
-    const [projectsRes, skillsRes, experienceRes, aboutRes, heroRes, contactRes] = await Promise.all([
+    // Add a timeout to prevent hanging indefinitely during build
+    const timeoutPromise = new Promise((_, reject) =>
+      setTimeout(() => reject(new Error('Request timed out')), 5000)
+    );
+
+    const dataPromise = Promise.all([
       supabase.from('projects').select('*').order('created_at', { ascending: false }),
       supabase.from('skills').select('*').order('name'),
       supabase.from('experience').select('*').order('start_date', { ascending: false }),
@@ -19,6 +34,12 @@ async function getData() {
       supabase.from('hero').select('*').maybeSingle(),
       supabase.from('contact_settings').select('*').maybeSingle()
     ]);
+
+    // Race against the timeout
+    const results = await Promise.race([dataPromise, timeoutPromise]) as any;
+
+    // Destructure results safely
+    const [projectsRes, skillsRes, experienceRes, aboutRes, heroRes, contactRes] = results;
 
     // If critical connection errors, throw to use mock data
     if (projectsRes.error && projectsRes.error.code !== 'PGRST116') throw projectsRes.error;
