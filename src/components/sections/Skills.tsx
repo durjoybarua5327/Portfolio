@@ -81,17 +81,17 @@ export default function Skills({ skills }: SkillsProps) {
                     {/* Navigation Arrows */}
                     <button
                         onClick={() => scroll('left')}
-                        className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-12 z-20 w-10 h-10 rounded-full bg-background/80 border border-primary/20 text-primary hover:bg-primary/10 hover:border-primary/50 transition-all flex items-center justify-center opacity-0 group-hover/carousel:opacity-100 disabled:opacity-50"
+                        className="absolute left-1 md:left-0 top-1/2 -translate-y-1/2 md:-translate-x-12 z-20 w-8 h-8 md:w-10 md:h-10 rounded-full bg-background/80 border border-primary/20 text-primary hover:bg-primary/10 hover:border-primary/50 transition-all flex items-center justify-center opacity-100 md:opacity-0 md:group-hover/carousel:opacity-100 disabled:opacity-50"
                         aria-label="Scroll left"
                     >
-                        <ChevronLeft size={24} />
+                        <ChevronLeft size={20} className="md:w-6 md:h-6" />
                     </button>
                     <button
                         onClick={() => scroll('right')}
-                        className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-12 z-20 w-10 h-10 rounded-full bg-background/80 border border-primary/20 text-primary hover:bg-primary/10 hover:border-primary/50 transition-all flex items-center justify-center opacity-0 group-hover/carousel:opacity-100 disabled:opacity-50"
+                        className="absolute right-1 md:right-0 top-1/2 -translate-y-1/2 md:translate-x-12 z-20 w-8 h-8 md:w-10 md:h-10 rounded-full bg-background/80 border border-primary/20 text-primary hover:bg-primary/10 hover:border-primary/50 transition-all flex items-center justify-center opacity-100 md:opacity-0 md:group-hover/carousel:opacity-100 disabled:opacity-50"
                         aria-label="Scroll right"
                     >
-                        <ChevronRight size={24} />
+                        <ChevronRight size={20} className="md:w-6 md:h-6" />
                     </button>
 
                     <div

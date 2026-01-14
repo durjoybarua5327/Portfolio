@@ -36,18 +36,22 @@ export default function Navbar() {
 
     const scrollToSection = (id: string) => {
         setIsOpen(false);
-        const element = document.getElementById(id);
-        if (element) {
-            // Offset for fixed header
-            const headerOffset = 80;
-            const elementPosition = element.getBoundingClientRect().top;
-            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+        // Small timeout to allow the menu to begin closing/DOM to settle before scrolling
+        // This prevents scroll interruptions on mobile devices
+        setTimeout(() => {
+            const element = document.getElementById(id);
+            if (element) {
+                // Offset for fixed header
+                const headerOffset = 80;
+                const elementPosition = element.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.scrollY - headerOffset;
 
-            window.scrollTo({
-                top: offsetPosition,
-                behavior: "smooth"
-            });
-        }
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: "smooth"
+                });
+            }
+        }, 150);
     };
 
     if (isHidden) return null;
@@ -101,10 +105,10 @@ export default function Navbar() {
                     </div>
 
                     {/* Mobile Menu Button */}
-                    <div className="md:hidden">
+                    <div className="md:hidden relative z-50">
                         <button
                             onClick={() => setIsOpen(!isOpen)}
-                            className="text-foreground p-2 hover:bg-white/10 rounded-full transition-colors focus:outline-none"
+                            className="text-foreground p-2 hover:bg-white/10 rounded-full transition-colors focus:outline-none touch-manipulation cursor-pointer"
                             aria-label="Toggle menu"
                         >
                             {isOpen ? <X size={24} /> : <Menu size={24} />}
@@ -129,15 +133,24 @@ export default function Navbar() {
                                     href={item.href}
                                     onClick={(e) => {
                                         e.preventDefault();
+                                        e.stopPropagation(); // Stop bubbling
                                         scrollToSection(item.href.substring(1));
                                     }}
-                                    className="text-foreground/80 hover:text-primary text-lg font-medium transition-colors cursor-pointer py-2 border-b border-white/5"
+                                    className="block text-foreground/80 hover:text-primary text-lg font-medium transition-colors cursor-pointer py-2 border-b border-white/5 active:bg-white/5"
                                 >
                                     {item.name}
                                 </a>
                             ))}
                             <div className="pt-4">
-                                <Button className="w-full" onClick={() => scrollToSection('contact')}>Contact Me</Button>
+                                <Button
+                                    className="w-full"
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        scrollToSection('contact');
+                                    }}
+                                >
+                                    Contact Me
+                                </Button>
                             </div>
                         </div>
                     </motion.div>
