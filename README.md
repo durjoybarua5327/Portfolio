@@ -40,7 +40,7 @@ A modern, responsive, and production-ready portfolio built with Next.js (App Rou
    npm run dev
    ```
 
-## distinct Folders
+## Project Structure
 
 - `src/app`: App Router pages and layout.
 - `src/components`: Reusable components.
@@ -50,11 +50,12 @@ A modern, responsive, and production-ready portfolio built with Next.js (App Rou
 - `src/lib`: Utilities and Supabase client.
 - `src/types`: TypeScript interfaces.
 
-## deploying
+## Deploying on Vercel
 
-This project is ready for Vercel.
+This project is optimized for deployment on Vercel.
 
-1. Push to GitHub.
-2. Import project in Vercel.
-3. Add environment variables (optional).
-4. Deploy!
+1. Push your code to GitHub.
+2. Go to [Vercel.com](https://vercel.com) and create a new project.
+3. Import your GitHub repository.
+4. (Optional) Add your Supabase environment variables in the "Environment Variables" section.
+5. Click **Deploy**.
