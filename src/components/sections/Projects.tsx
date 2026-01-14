@@ -6,7 +6,7 @@ import { Project } from "@/types";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { ExternalLink, Github, ChevronLeft, ChevronRight } from "lucide-react";
-import { useRef } from "react";
+import { useRef, useState, MouseEvent } from "react";
 
 interface ProjectsProps {
     projects: Project[];
@@ -14,6 +14,13 @@ interface ProjectsProps {
 
 export default function Projects({ projects }: ProjectsProps) {
     const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+    // Dragging state
+    const isDown = useRef(false);
+    const startX = useRef(0);
+    const scrollLeftPos = useRef(0);
+    const hasMoved = useRef(false);
+    const [isDragging, setIsDragging] = useState(false); // For visual cursor state
 
     const scroll = (direction: 'left' | 'right') => {
         if (!scrollContainerRef.current) return;
@@ -39,6 +46,64 @@ export default function Projects({ projects }: ProjectsProps) {
             } else {
                 container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
             }
+        }
+    };
+
+    const handleMouseDown = (e: MouseEvent) => {
+        if (!scrollContainerRef.current) return;
+        isDown.current = true;
+        hasMoved.current = false;
+        startX.current = e.pageX - scrollContainerRef.current.offsetLeft;
+        scrollLeftPos.current = scrollContainerRef.current.scrollLeft;
+
+        setIsDragging(true);
+
+        // Disable snap and smooth scroll during drag
+        scrollContainerRef.current.style.scrollSnapType = 'none';
+        scrollContainerRef.current.style.scrollBehavior = 'auto';
+    };
+
+    const handleMouseLeave = () => {
+        if (!isDown.current) return;
+        isDown.current = false;
+        setIsDragging(false);
+
+        if (scrollContainerRef.current) {
+            scrollContainerRef.current.style.scrollSnapType = 'x mandatory';
+            scrollContainerRef.current.style.scrollBehavior = 'smooth';
+        }
+    };
+
+    const handleMouseUp = () => {
+        isDown.current = false;
+        setIsDragging(false);
+
+        if (scrollContainerRef.current) {
+            scrollContainerRef.current.style.scrollSnapType = 'x mandatory';
+            scrollContainerRef.current.style.scrollBehavior = 'smooth';
+        }
+    };
+
+    const handleMouseMove = (e: MouseEvent) => {
+        if (!isDown.current || !scrollContainerRef.current) return;
+        e.preventDefault();
+
+        const x = e.pageX - scrollContainerRef.current.offsetLeft;
+        const walk = (x - startX.current) * 2; // Scroll speed
+
+        // Check for significant movement to flag as drag vs click
+        if (Math.abs(walk) > 5) {
+            hasMoved.current = true;
+        }
+
+        scrollContainerRef.current.scrollLeft = scrollLeftPos.current - walk;
+    };
+
+    const handleClickCapture = (e: MouseEvent) => {
+        // Prevent click if it was a drag gesture
+        if (hasMoved.current) {
+            e.preventDefault();
+            e.stopPropagation();
         }
     };
 
@@ -85,7 +150,12 @@ export default function Projects({ projects }: ProjectsProps) {
 
                 <div
                     ref={scrollContainerRef}
-                    className="flex gap-6 overflow-x-auto pb-8 snap-x snap-mandatory [scrollbar-width:none] -mx-4 px-4 scroll-smooth"
+                    className={`flex gap-6 overflow-x-auto pb-8 snap-x snap-mandatory [scrollbar-width:none] -mx-4 px-4 scroll-smooth ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
+                    onMouseDown={handleMouseDown}
+                    onMouseLeave={handleMouseLeave}
+                    onMouseUp={handleMouseUp}
+                    onMouseMove={handleMouseMove}
+                    onClickCapture={handleClickCapture}
                 >
                     {projects.map((project, index) => (
                         <motion.div
@@ -113,7 +183,7 @@ export default function Projects({ projects }: ProjectsProps) {
                             <div className="absolute inset-[1px] bg-background rounded-2xl" />
 
                             {/* Card Content */}
-                            <div className="relative h-full glass-card rounded-2xl overflow-hidden border border-white/10 hover:border-white/20 transition-all duration-300 flex flex-col bg-background/50 backdrop-blur-xl z-10">
+                            <div className="relative h-full glass-card rounded-2xl overflow-hidden border border-white/10 hover:border-white/20 transition-all duration-300 flex flex-col bg-background/50 backdrop-blur-xl z-10 pointer-events-auto">
 
                                 {/* Image / Preview Area */}
                                 <div className="relative h-32 sm:h-40 w-full bg-black/5 overflow-hidden group-hover:from-primary/20 group-hover:to-accent/20 transition-colors duration-500">
@@ -124,6 +194,7 @@ export default function Projects({ projects }: ProjectsProps) {
                                             fill
                                             className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
                                             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                            draggable={false}
                                         />
                                     ) : (
                                         <div className="absolute inset-0 flex items-center justify-center text-muted-foreground z-0">
@@ -143,12 +214,12 @@ export default function Projects({ projects }: ProjectsProps) {
                                         {project.title}
                                     </h3>
 
-                                    <p className="text-muted-foreground text-xs leading-relaxed mb-4 flex-1 line-clamp-3">
+                                    <p className="text-muted-foreground text-xs leading-relaxed mb-4 flex-1 line-clamp-3 select-none">
                                         {project.description}
                                     </p>
 
                                     {/* Technologies */}
-                                    <div className="flex flex-wrap gap-1.5 mb-5">
+                                    <div className="flex flex-wrap gap-1.5 mb-5 select-none">
                                         {project.technologies.slice(0, 4).map((tech) => (
                                             <span
                                                 key={tech}
