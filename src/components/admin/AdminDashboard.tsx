@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
 import { useRouter } from 'next/navigation';
 import Button from '@/components/ui/Button';
-import { LogOut, User, Briefcase, Code, FolderGit2, Plus, Trash2, Save, X, Sparkles, Mail, Layout, Inbox } from 'lucide-react';
+import { LogOut, User, Briefcase, Code, FolderGit2, Plus, Trash2, Save, X, Sparkles, Mail, Layout, Inbox, Pencil } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { About, Experience, Project, Skill, HeroData, ContactSettings, Message } from '@/types';
 import FileUpload from './FileUpload';
@@ -127,7 +127,13 @@ export default function AdminDashboard() {
 
     const addSkill = async () => {
         if (!newSkill.name || !newSkill.category) return alert("All fields required");
-        const { error } = await supabase.from('skills').insert([newSkill]);
+
+        const promise = newSkill.id
+            ? supabase.from('skills').update(newSkill).eq('id', newSkill.id)
+            : supabase.from('skills').insert([newSkill]);
+
+        const { error } = await promise;
+
         if (error) alert(error.message);
         else {
             setIsSkillModalOpen(false);
@@ -138,7 +144,16 @@ export default function AdminDashboard() {
 
     const addProject = async () => {
         if (!newProject.title || !newProject.description) return alert("Title and Description required");
-        const { error } = await supabase.from('projects').insert([newProject]);
+
+        // Sanitize project data to remove UI-specific fields if any, though Partial<Project> helps
+        const projectData = { ...newProject };
+
+        const promise = newProject.id
+            ? supabase.from('projects').update(projectData).eq('id', newProject.id)
+            : supabase.from('projects').insert([projectData]);
+
+        const { error } = await promise;
+
         if (error) alert(error.message);
         else {
             setIsProjectModalOpen(false);
@@ -149,7 +164,13 @@ export default function AdminDashboard() {
 
     const addExperience = async () => {
         if (!newExperience.role || !newExperience.company || !newExperience.start_date) return alert("Required fields missing");
-        const { error } = await supabase.from('experience').insert([newExperience]);
+
+        const promise = newExperience.id
+            ? supabase.from('experience').update(newExperience).eq('id', newExperience.id)
+            : supabase.from('experience').insert([newExperience]);
+
+        const { error } = await promise;
+
         if (error) alert(error.message);
         else {
             setIsExperienceModalOpen(false);
@@ -206,17 +227,17 @@ export default function AdminDashboard() {
                     {/* Headers for Messages doesn't need 'Add New' */}
 
                     {activeTab === 'skills' && (
-                        <Button size="sm" onClick={() => setIsSkillModalOpen(true)}>
+                        <Button size="sm" onClick={() => { setNewSkill({ category: 'frontend', level: 100 }); setIsSkillModalOpen(true); }}>
                             <Plus size={16} className="mr-2" /> Add Skill
                         </Button>
                     )}
                     {activeTab === 'projects' && (
-                        <Button size="sm" onClick={() => setIsProjectModalOpen(true)}>
+                        <Button size="sm" onClick={() => { setNewProject({ technologies: [] }); setIsProjectModalOpen(true); }}>
                             <Plus size={16} className="mr-2" /> Add Project
                         </Button>
                     )}
                     {activeTab === 'experience' && (
-                        <Button size="sm" onClick={() => setIsExperienceModalOpen(true)}>
+                        <Button size="sm" onClick={() => { setNewExperience({}); setIsExperienceModalOpen(true); }}>
                             <Plus size={16} className="mr-2" /> Add Experience
                         </Button>
                     )}
@@ -294,9 +315,14 @@ export default function AdminDashboard() {
                                             <p className="font-bold">{skill.name}</p>
                                             <p className="text-xs text-muted-foreground uppercase">{skill.category}</p>
                                         </div>
-                                        <button onClick={() => deleteItem('skills', skill.id)} className="text-red-400 hover:text-red-300 opacity-0 group-hover:opacity-100 transition-opacity">
-                                            <Trash2 size={16} />
-                                        </button>
+                                        <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                            <button onClick={() => { setNewSkill(skill); setIsSkillModalOpen(true); }} className="text-blue-400 hover:text-blue-300">
+                                                <Pencil size={16} />
+                                            </button>
+                                            <button onClick={() => deleteItem('skills', skill.id)} className="text-red-400 hover:text-red-300">
+                                                <Trash2 size={16} />
+                                            </button>
+                                        </div>
                                     </div>
                                 ))}
                             </div>
@@ -318,9 +344,14 @@ export default function AdminDashboard() {
                                                 {project.repo_url && <span className="text-xs border px-1 rounded border-white/20">Repo</span>}
                                             </div>
                                         </div>
-                                        <button onClick={() => deleteItem('projects', project.id)} className="text-red-400 hover:text-red-300 opacity-0 group-hover:opacity-100 transition-opacity">
-                                            <Trash2 size={18} />
-                                        </button>
+                                        <div className="flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                            <button onClick={() => { setNewProject(project); setIsProjectModalOpen(true); }} className="text-blue-400 hover:text-blue-300">
+                                                <Pencil size={18} />
+                                            </button>
+                                            <button onClick={() => deleteItem('projects', project.id)} className="text-red-400 hover:text-red-300">
+                                                <Trash2 size={18} />
+                                            </button>
+                                        </div>
                                     </div>
                                 ))}
                             </div>
@@ -336,9 +367,14 @@ export default function AdminDashboard() {
                                             <p className="text-xs text-muted-foreground">{exp.start_date} - {exp.end_date || 'Present'}</p>
                                             <p className="text-xs text-muted-foreground/50 mt-1 line-clamp-1">{exp.description}</p>
                                         </div>
-                                        <button onClick={() => deleteItem('experience', exp.id)} className="text-red-400 hover:text-red-300 opacity-0 group-hover:opacity-100 transition-opacity">
-                                            <Trash2 size={18} />
-                                        </button>
+                                        <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                            <button onClick={() => { setNewExperience(exp); setIsExperienceModalOpen(true); }} className="text-blue-400 hover:text-blue-300">
+                                                <Pencil size={18} />
+                                            </button>
+                                            <button onClick={() => deleteItem('experience', exp.id)} className="text-red-400 hover:text-red-300">
+                                                <Trash2 size={18} />
+                                            </button>
+                                        </div>
                                     </div>
                                 ))}
                             </div>
@@ -397,7 +433,7 @@ export default function AdminDashboard() {
                 {isSkillModalOpen && (
                     <div className="absolute inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
                         <div className="bg-background border border-white/10 p-6 rounded-2xl w-full max-w-md space-y-4 shadow-2xl">
-                            <h3 className="text-xl font-bold">Add New Skill</h3>
+                            <h3 className="text-xl font-bold">{newSkill.id ? 'Edit Skill' : 'Add New Skill'}</h3>
                             <FormInput label="Skill Name" value={newSkill.name || ''} onChange={v => setNewSkill({ ...newSkill, name: v })} />
                             <div className="space-y-1.5">
                                 <label className="text-sm font-medium text-muted-foreground">Category</label>
@@ -415,7 +451,7 @@ export default function AdminDashboard() {
                             </div>
                             <div className="flex justify-end gap-2 pt-2">
                                 <Button variant="ghost" onClick={() => setIsSkillModalOpen(false)}>Cancel</Button>
-                                <Button onClick={addSkill}>Add Skill</Button>
+                                <Button onClick={addSkill}>{newSkill.id ? 'Update Skill' : 'Add Skill'}</Button>
                             </div>
                         </div>
                     </div>
@@ -425,7 +461,7 @@ export default function AdminDashboard() {
                 {isProjectModalOpen && (
                     <div className="absolute inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
                         <div className="bg-background border border-white/10 p-6 rounded-2xl w-full max-w-lg space-y-4 shadow-2xl h-[80vh] overflow-y-auto">
-                            <h3 className="text-xl font-bold">Add New Project</h3>
+                            <h3 className="text-xl font-bold">{newProject.id ? 'Edit Project' : 'Add New Project'}</h3>
                             <ImageUpload value={newProject.image_url} onChange={url => setNewProject({ ...newProject, image_url: url })} />
                             <FormInput label="Project Title" value={newProject.title || ''} onChange={v => setNewProject({ ...newProject, title: v })} />
                             <FormTextarea label="Description" value={newProject.description || ''} onChange={v => setNewProject({ ...newProject, description: v })} />
@@ -442,7 +478,7 @@ export default function AdminDashboard() {
                             </div>
                             <div className="flex justify-end gap-2 pt-2">
                                 <Button variant="ghost" onClick={() => setIsProjectModalOpen(false)}>Cancel</Button>
-                                <Button onClick={addProject}>Add Project</Button>
+                                <Button onClick={addProject}>{newProject.id ? 'Update Project' : 'Add Project'}</Button>
                             </div>
                         </div>
                     </div>
@@ -452,7 +488,7 @@ export default function AdminDashboard() {
                 {isExperienceModalOpen && (
                     <div className="absolute inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
                         <div className="bg-background border border-white/10 p-6 rounded-2xl w-full max-w-lg space-y-4 shadow-2xl">
-                            <h3 className="text-xl font-bold">Add Experience</h3>
+                            <h3 className="text-xl font-bold">{newExperience.id ? 'Edit Experience' : 'Add Experience'}</h3>
                             <FormInput label="Role / Title" value={newExperience.role || ''} onChange={v => setNewExperience({ ...newExperience, role: v })} />
                             <FormInput label="Company / Organization" value={newExperience.company || ''} onChange={v => setNewExperience({ ...newExperience, company: v })} />
                             <div className="grid grid-cols-2 gap-4">
@@ -462,7 +498,7 @@ export default function AdminDashboard() {
                             <FormTextarea label="Description" value={newExperience.description || ''} onChange={v => setNewExperience({ ...newExperience, description: v })} />
                             <div className="flex justify-end gap-2 pt-2">
                                 <Button variant="ghost" onClick={() => setIsExperienceModalOpen(false)}>Cancel</Button>
-                                <Button onClick={addExperience}>Add Experience</Button>
+                                <Button onClick={addExperience}>{newExperience.id ? 'Update Experience' : 'Add Experience'}</Button>
                             </div>
                         </div>
                     </div>
