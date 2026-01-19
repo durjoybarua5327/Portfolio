@@ -7,7 +7,7 @@ import Contact from "@/components/sections/Contact";
 import { supabase } from "@/lib/supabase";
 import { Project, Skill, Experience as ExperienceType, About as AboutType, HeroData, ContactSettings } from "@/types";
 
-export const revalidate = 60; // Revalidate every minute so Admin changes show up quickly
+export const revalidate = 0; // Disable cache to ensure realtime updates
 
 async function getData() {
   // Check if Supabase is configured. If not, return mock data immediately to prevent build hangs.
@@ -41,8 +41,15 @@ async function getData() {
     // Destructure results safely
     const [projectsRes, skillsRes, experienceRes, aboutRes, heroRes, contactRes] = results;
 
-    // If critical connection errors, throw to use mock data
-    if (projectsRes.error && projectsRes.error.code !== 'PGRST116') throw projectsRes.error;
+    // Check for specific errors in essential tables
+    if (projectsRes.error && projectsRes.error.code !== 'PGRST116') {
+      console.error("Projects Error:", projectsRes.error);
+      throw projectsRes.error;
+    }
+    if (heroRes.error && heroRes.error.code !== 'PGRST116') {
+      console.error("Hero Error:", heroRes.error);
+      // We don't throw here to allow partial data, but logging is crucial
+    }
 
     // Default About if missing from DB
     const defaultAbout: AboutType = {
@@ -93,13 +100,13 @@ async function getData() {
       } as AboutType,
       hero: {
         id: '1',
-        greeting: 'Hello, I am',
+        greeting: 'Hello (USING MOCK DATA - CHECK DB)', // Visual Error Indicator
         name: 'Durjoy Barua',
         role_text: 'Software Developer',
         headline_prefix: 'Crafting',
         headline_highlight: 'digital',
         headline_suffix: 'experiences with precision.',
-        description: 'Hi, I am a Software Developer specializing in React, React Native, and Flutter.'
+        description: 'If you see this, the app failed to connect to Supabase.'
       } as HeroData,
       contact: {
         id: '1', email: 'mock@example.com'
