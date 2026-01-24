@@ -58,10 +58,10 @@ export default function Contact({ contact }: { contact?: ContactSettings }) {
                 viewport={{ once: true }}
                 className="text-center mb-6"
             >
-                <h2 className="text-3xl md:text-5xl font-bold mb-3 bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
+                <h2 className="text-2xl md:text-4xl font-bold mb-3 bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
                     Get In Touch
                 </h2>
-                <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto">
+                <p className="text-sm md:text-base text-muted-foreground max-w-2xl mx-auto">
                     Have a project in mind or just want to say hi? I'd love to hear from you.
                 </p>
             </motion.div>

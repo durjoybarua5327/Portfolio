@@ -96,7 +96,7 @@ export default function Skills({ skills }: SkillsProps) {
 
                     <div
                         ref={scrollContainerRef}
-                        className="flex gap-6 overflow-x-auto pb-8 snap-x snap-mandatory [scrollbar-width:none] -mx-4 px-4 scroll-smooth"
+                        className="flex gap-6 overflow-x-auto overflow-y-hidden pb-8 snap-x snap-mandatory [scrollbar-width:none] -mx-4 px-4 scroll-smooth items-stretch"
                     >
                         {Object.entries(categories).map(([category, categorySkills], idx) => (
                             <motion.div
@@ -105,7 +105,7 @@ export default function Skills({ skills }: SkillsProps) {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ delay: idx * 0.15, duration: 0.5 }}
-                                className="relative min-w-[100%] md:min-w-[calc(50%-12px)] lg:min-w-[calc(33.333%-16px)] snap-start group"
+                                className="relative min-w-[100%] md:min-w-[calc(50%-12px)] lg:min-w-[calc(33.333%-16px)] snap-start group h-full flex flex-col min-h-[340px] md:min-h-[400px]"
                             >
                                 {/* Animated circulating gradient border effect */}
                                 <div className="absolute -inset-[2px] rounded-2xl opacity-75 group-hover:opacity-100 blur-sm transition duration-500 overflow-hidden">
@@ -119,7 +119,7 @@ export default function Skills({ skills }: SkillsProps) {
                                 </div>
 
                                 {/* Main card */}
-                                <div className="relative glass-card p-4 md:p-5 rounded-2xl border border-white/10 hover:border-white/20 transition-all duration-300 h-full flex flex-col">
+                                <div className="relative glass-card p-4 md:p-5 rounded-2xl border border-white/10 hover:border-white/20 transition-all duration-300 flex-1 flex flex-col">
                                     {/* Category header */}
                                     <div className="flex items-center gap-3 mb-4">
                                         <div className={`w-8 h-8 md:w-10 md:h-10 rounded-xl bg-gradient-to-br ${categoryColors[category as keyof typeof categoryColors]} flex items-center justify-center text-lg md:text-xl shadow-lg flex-shrink-0`}>

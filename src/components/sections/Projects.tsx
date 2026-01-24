@@ -151,7 +151,7 @@ export default function Projects({ projects }: ProjectsProps) {
 
                 <div
                     ref={scrollContainerRef}
-                    className={`flex gap-6 overflow-x-auto pb-8 snap-x snap-mandatory [scrollbar-width:none] -mx-4 px-4 scroll-smooth ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
+                    className={`flex gap-6 overflow-x-auto overflow-y-hidden pb-8 snap-x snap-mandatory [scrollbar-width:none] -mx-4 px-4 scroll-smooth items-stretch ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
                     onMouseDown={handleMouseDown}
                     onMouseLeave={handleMouseLeave}
                     onMouseUp={handleMouseUp}
@@ -165,7 +165,7 @@ export default function Projects({ projects }: ProjectsProps) {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: index * 0.1, duration: 0.5 }}
-                            className="relative min-w-[85vw] sm:min-w-[calc(50%-12px)] lg:min-w-[calc(33.333%-16px)] snap-center sm:snap-start group h-full"
+                            className="relative min-w-[85vw] sm:min-w-[calc(50%-12px)] lg:min-w-[calc(33.333%-16px)] snap-center sm:snap-start group h-full flex flex-col min-h-[340px] md:min-h-[400px]"
                         >
 
                             {/* Animated circulating gradient border - Reverse Spin with Page Colors */}
@@ -184,7 +184,7 @@ export default function Projects({ projects }: ProjectsProps) {
                             <div className="absolute inset-[1px] bg-background rounded-2xl" />
 
                             {/* Card Content */}
-                            <div className="relative h-full glass-card rounded-2xl overflow-hidden border border-white/10 hover:border-white/20 transition-all duration-300 flex flex-col bg-background/50 backdrop-blur-xl z-10 pointer-events-auto">
+                            <div className="relative flex-1 glass-card rounded-2xl overflow-hidden border border-white/10 hover:border-white/20 transition-all duration-300 flex flex-col bg-background/50 backdrop-blur-xl z-10 pointer-events-auto">
 
                                 {/* Image / Preview Area */}
                                 <div className="relative h-32 sm:h-40 w-full bg-black/5 overflow-hidden group-hover:from-primary/20 group-hover:to-accent/20 transition-colors duration-500">

@@ -123,7 +123,7 @@ export default function Hero({ hero, contact }: { hero?: HeroData, contact?: Con
                     initial={{ opacity: 0, scale: 0.9, x: 20 }}
                     animate={{ opacity: 1, scale: 1, x: 0 }}
                     transition={{ duration: 0.6, delay: 0.2 }}
-                    className="relative mx-auto md:ml-auto w-full max-w-lg h-[300px] sm:h-[400px] md:h-[600px] order-1 md:order-2"
+                    className="relative mx-auto md:ml-auto w-full max-w-lg h-[300px] sm:h-[400px] md:h-[450px] lg:h-[600px] order-1 md:order-2"
                 >
                     {/* Glowing Card Effect */}
                     <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-accent/20 rounded-3xl blur-2xl -z-10 transfom translate-y-4" />
