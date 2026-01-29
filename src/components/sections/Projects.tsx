@@ -123,7 +123,7 @@ export default function Projects({ projects }: ProjectsProps) {
                 viewport={{ once: true }}
                 className="text-center mb-12"
             >
-                <h2 className="text-3xl md:text-5xl font-bold mb-3 bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
+                <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold mb-3 bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent break-words">
                     Featured Projects
                 </h2>
                 <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto">
@@ -131,7 +131,7 @@ export default function Projects({ projects }: ProjectsProps) {
                 </p>
             </motion.div>
 
-            <div className="relative w-full max-w-5xl mx-auto px-4 group/carousel">
+            <div className="relative w-full max-w-5xl 3xl:max-w-7xl 4xl:max-w-screen-2xl mx-auto px-4 group/carousel">
                 {/* Navigation Arrows */}
                 {/* Navigation Arrows */}
                 <button
@@ -165,7 +165,7 @@ export default function Projects({ projects }: ProjectsProps) {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: index * 0.1, duration: 0.5 }}
-                            className="relative min-w-[85vw] sm:min-w-[calc(50%-12px)] lg:min-w-[calc(33.333%-16px)] snap-center sm:snap-start group h-full flex flex-col min-h-[340px] md:min-h-[400px]"
+                            className="relative min-w-[85vw] sm:min-w-[calc(50%-12px)] lg:min-w-[calc(33.333%-16px)] 3xl:min-w-[calc(25%-18px)] 4xl:min-w-[calc(20%-20px)] snap-center sm:snap-start group h-full flex flex-col min-h-[340px] md:min-h-[400px]"
                         >
 
                             {/* Animated circulating gradient border - Reverse Spin with Page Colors */}

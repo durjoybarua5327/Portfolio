@@ -26,7 +26,7 @@ export default function About({ about }: AboutProps) {
                 </p>
             </motion.div>
 
-            <div className="relative w-full max-w-5xl mx-auto px-4 md:px-0">
+            <div className="relative w-full max-w-5xl 3xl:max-w-7xl 4xl:max-w-screen-2xl mx-auto px-4 md:px-0">
                 {/* Main Card with Animated Border */}
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
@@ -55,7 +55,7 @@ export default function About({ about }: AboutProps) {
 
                                 {/* Profile Image Container */}
                                 <div className="absolute inset-0 flex items-center justify-center p-4 md:p-8 z-0">
-                                    <div className="relative w-[260px] h-[260px] md:w-[320px] md:h-[320px] flex-shrink-0">
+                                    <div className="relative w-[260px] h-[260px] md:w-[320px] md:h-[320px] 3xl:w-[400px] 3xl:h-[400px] 4xl:w-[500px] 4xl:h-[500px] flex-shrink-0">
                                         {/* Animated glow effect behind image */}
                                         <div className="absolute inset-0 bg-gradient-to-br from-primary/30 to-accent/30 rounded-full blur-2xl opacity-50 group-hover/image:opacity-70 transition-opacity duration-500" />
 
@@ -77,7 +77,7 @@ export default function About({ about }: AboutProps) {
                             </div>
 
                             {/* Right: Bio Content */}
-                            <div className="p-5 md:p-6 flex flex-col justify-center">
+                            <div className="p-5 md:p-8 3xl:p-12 4xl:p-16 flex flex-col justify-center">
                                 <motion.div
                                     initial={{ opacity: 0, y: 20 }}
                                     whileInView={{ opacity: 1, y: 0 }}

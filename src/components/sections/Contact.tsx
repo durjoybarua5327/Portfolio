@@ -66,7 +66,7 @@ export default function Contact({ contact }: { contact?: ContactSettings }) {
                 </p>
             </motion.div>
 
-            <div className="max-w-xl mx-auto w-full px-4">
+            <div className="max-w-xl 3xl:max-w-2xl 4xl:max-w-4xl mx-auto w-full px-4">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}

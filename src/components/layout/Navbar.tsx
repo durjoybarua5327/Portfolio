@@ -63,7 +63,7 @@ export default function Navbar() {
                 scrolled ? "bg-background/80 backdrop-blur-xl border-b border-white/5 py-4" : "bg-transparent py-6"
             )}
         >
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="max-w-7xl 3xl:max-w-screen-2xl 4xl:max-w-screen-3xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex items-center justify-between">
 
                     {/* Logo */}
@@ -121,29 +121,33 @@ export default function Navbar() {
             <AnimatePresence>
                 {isOpen && (
                     <motion.div
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: "auto" }}
-                        exit={{ opacity: 0, height: 0 }}
-                        className="md:hidden bg-[#0A0B14]/95 backdrop-blur-xl border-b border-white/10 overflow-hidden absolute top-full left-0 w-full shadow-2xl"
+                        initial={{ opacity: 0, scale: 0.9, y: -20, x: 20 }}
+                        animate={{ opacity: 1, scale: 1, y: 0, x: 0 }}
+                        exit={{ opacity: 0, scale: 0.9, y: -20, x: 20 }}
+                        transition={{ type: "spring", damping: 25, stiffness: 300 }}
+                        className="md:hidden absolute top-[calc(100%+12px)] right-4 w-64 glass-card rounded-2xl border border-white/10 shadow-3xl overflow-hidden z-[60]"
                     >
-                        <div className="px-5 pt-4 pb-8 space-y-4 flex flex-col">
-                            {navItems.map((item) => (
-                                <a
+                        <div className="p-4 space-y-1 flex flex-col">
+                            {navItems.map((item, index) => (
+                                <motion.a
                                     key={item.name}
                                     href={item.href}
+                                    initial={{ opacity: 0, x: 10 }}
+                                    animate={{ opacity: 1, x: 0 }}
+                                    transition={{ delay: index * 0.05 }}
                                     onClick={(e) => {
                                         e.preventDefault();
-                                        e.stopPropagation(); // Stop bubbling
+                                        e.stopPropagation();
                                         scrollToSection(item.href.substring(1));
                                     }}
-                                    className="block text-foreground/80 hover:text-primary text-lg font-medium transition-colors cursor-pointer py-2 border-b border-white/5 active:bg-white/5"
+                                    className="block text-foreground/70 hover:text-primary hover:bg-white/5 px-4 py-3 rounded-xl text-base font-medium transition-all cursor-pointer active:scale-95"
                                 >
                                     {item.name}
-                                </a>
+                                </motion.a>
                             ))}
-                            <div className="pt-4">
+                            <div className="pt-2">
                                 <Button
-                                    className="w-full"
+                                    className="w-full bg-gradient-to-r from-primary to-accent hover:opacity-90 shadow-lg shadow-primary/20"
                                     onClick={(e) => {
                                         e.stopPropagation();
                                         scrollToSection('contact');

@@ -69,7 +69,7 @@ export default function Skills({ skills }: SkillsProps) {
                     viewport={{ once: true }}
                     className="text-center mb-12"
                 >
-                    <h2 className="text-3xl md:text-5xl font-bold mb-3 bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
+                    <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold mb-3 bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent break-words">
                         Technical Skills
                     </h2>
                     <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto">
@@ -77,7 +77,7 @@ export default function Skills({ skills }: SkillsProps) {
                     </p>
                 </motion.div>
 
-                <div className="relative w-full max-w-6xl mx-auto group/carousel">
+                <div className="relative w-full max-w-6xl 3xl:max-w-7xl 4xl:max-w-screen-2xl mx-auto group/carousel">
                     {/* Navigation Arrows */}
                     <button
                         onClick={() => scroll('left')}
@@ -129,7 +129,7 @@ export default function Skills({ skills }: SkillsProps) {
                                     </div>
 
                                     {/* Skills grid */}
-                                    <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 flex-1">
+                                    <div className="grid grid-cols-2 lg:grid-cols-3 3xl:grid-cols-4 4xl:grid-cols-5 gap-3 flex-1">
                                         {categorySkills.map((skill, skillIdx) => (
                                             <motion.div
                                                 key={skill.id}

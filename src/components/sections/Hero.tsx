@@ -40,7 +40,7 @@ export default function Hero({ hero, contact }: { hero?: HeroData, contact?: Con
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.5, delay: 0.1 }}
-                        className="text-3xl sm:text-4xl md:text-6xl font-bold tracking-tight mb-4 leading-tight"
+                        className="text-2xl xs:text-3xl sm:text-4xl md:text-6xl 3xl:text-7xl 4xl:text-8xl font-bold tracking-tight mb-4 leading-tight break-words"
                     >
                         {hero.headline_prefix} <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">{hero.headline_highlight}</span> {hero.headline_suffix}
                     </motion.h1>
@@ -49,7 +49,7 @@ export default function Hero({ hero, contact }: { hero?: HeroData, contact?: Con
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.5, delay: 0.2 }}
-                        className="text-sm sm:text-base md:text-lg text-muted-foreground mb-8 max-w-xl leading-relaxed"
+                        className="text-sm sm:text-base md:text-lg 3xl:text-xl 4xl:text-2xl text-muted-foreground mb-8 max-w-xl 3xl:max-w-2xl 4xl:max-w-3xl leading-relaxed"
                     >
                         {hero.description}
                     </motion.p>
@@ -123,7 +123,7 @@ export default function Hero({ hero, contact }: { hero?: HeroData, contact?: Con
                     initial={{ opacity: 0, scale: 0.9, x: 20 }}
                     animate={{ opacity: 1, scale: 1, x: 0 }}
                     transition={{ duration: 0.6, delay: 0.2 }}
-                    className="relative mx-auto md:ml-auto w-full max-w-lg h-[300px] sm:h-[400px] md:h-[450px] lg:h-[600px] order-1 md:order-2"
+                    className="relative mx-auto md:ml-auto w-full max-w-lg 3xl:max-w-xl 4xl:max-w-2xl h-[300px] sm:h-[400px] md:h-[450px] lg:h-[600px] 3xl:h-[700px] 4xl:h-[800px] order-1 md:order-2"
                 >
                     {/* Glowing Card Effect */}
                     <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-accent/20 rounded-3xl blur-2xl -z-10 transfom translate-y-4" />

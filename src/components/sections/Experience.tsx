@@ -18,7 +18,7 @@ export default function Experience({ experience }: ExperienceProps) {
                 viewport={{ once: true }}
                 className="text-center mb-16"
             >
-                <h2 className="text-3xl md:text-5xl font-bold mb-3 bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
+                <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold mb-3 bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent break-words">
                     Experience
                 </h2>
                 <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto">
@@ -26,7 +26,7 @@ export default function Experience({ experience }: ExperienceProps) {
                 </p>
             </motion.div>
 
-            <div className="max-w-5xl w-full relative mx-auto px-4">
+            <div className="max-w-5xl 3xl:max-w-7xl 4xl:max-w-screen-2xl w-full relative mx-auto px-4">
                 {/* Vertical line - Elegant Gradient Line */}
                 <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-primary/50 to-transparent -translate-x-1/2 md:translate-x-0 hidden md:block" />
                 {/* Mobile Line */}

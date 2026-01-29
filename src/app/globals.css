@@ -26,20 +26,46 @@
   --color-border: #1E293B;
   --color-input: #1E293B;
   --color-ring: #12DAC3;
+
+  --breakpoint-3xl: 120rem;
+  /* 1920px */
+  --breakpoint-4xl: 160rem;
+  /* 2560px */
 }
 
 @layer base {
   html {
     scroll-behavior: smooth;
     scroll-padding-top: 80px;
+    /* Ensure root is the ONLY scroll container */
+    overflow-y: scroll;
     overflow-x: hidden;
+    /* Prevents layout shifts and double scrollbar glitches */
+    scrollbar-gutter: stable;
+    overscroll-behavior: none;
+    width: 100%;
+    height: auto;
+    min-height: 100%;
   }
 
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-feature-settings: "rlig" 1, "calt" 1;
+    /* Explicitly prevent body from creating a second scrollbar */
+    overflow-y: clip !important;
     overflow-x: hidden;
+    width: 100%;
+    margin: 0;
+    min-height: 100vh;
+    min-height: 100dvh;
+    position: relative;
+  }
+
+  /* Ensure the main content doesn't trigger a scrollbar independently */
+  main {
+    overflow: clip !important;
+    width: 100%;
   }
 }
 

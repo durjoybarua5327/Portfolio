@@ -15,7 +15,7 @@ export default function Section({ id, children, className }: SectionProps) {
         <section
             id={id}
             className={cn(
-                "min-h-screen flex flex-col justify-center items-center py-12 px-4 md:px-8 w-full max-w-7xl mx-auto overflow-x-hidden",
+                "min-h-screen flex flex-col justify-center items-center py-12 px-4 md:px-8 w-full max-w-7xl 3xl:max-w-screen-2xl 4xl:max-w-screen-3xl mx-auto overflow-x-hidden",
                 className
             )}
         >
