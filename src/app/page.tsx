@@ -29,7 +29,7 @@ async function getData() {
     const dataPromise = Promise.all([
       supabase.from('projects').select('*').order('created_at', { ascending: false }),
       supabase.from('skills').select('*').order('name'),
-      supabase.from('experience').select('*').order('start_date', { ascending: false }),
+      supabase.from('experience').select('*').order('created_at', { ascending: false }),
       supabase.from('about').select('*').maybeSingle(),
       supabase.from('hero').select('*').maybeSingle(),
       supabase.from('contact_settings').select('*').maybeSingle()

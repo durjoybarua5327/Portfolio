@@ -68,7 +68,7 @@ export default function AdminDashboard() {
             supabase.from('about').select('*').limit(1).single(),
             supabase.from('skills').select('*').order('category'),
             supabase.from('projects').select('*').order('created_at', { ascending: false }),
-            supabase.from('experience').select('*').order('start_date', { ascending: false }),
+            supabase.from('experience').select('*').order('created_at', { ascending: false }),
             supabase.from('contact_settings').select('*').limit(1).single(),
             supabase.from('messages').select('*').order('created_at', { ascending: false }),
         ]);
