@@ -106,10 +106,10 @@ export default function Hero({ hero, contact }: { hero?: HeroData, contact?: Con
                     transition={{ duration: 0.6, delay: 0.2 }}
                     className="relative mx-auto md:ml-auto w-full max-w-lg 3xl:max-w-xl 4xl:max-w-2xl h-[300px] sm:h-[400px] md:h-[450px] lg:h-[600px] 3xl:h-[700px] 4xl:h-[800px] order-1 md:order-2"
                 >
-                    {/* Glowing Card Effect */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-accent/20 rounded-3xl blur-2xl -z-10 transform translate-y-4" />
+                    {/* Soft ambient glow behind the robot */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-accent/10 rounded-full blur-3xl -z-10 transform scale-90" />
 
-                    <div className="relative h-full w-full rounded-3xl overflow-hidden bg-white/5 backdrop-blur-sm border border-white/10 group">
+                    <div className="relative h-full w-full overflow-hidden group">
                         {/* 3D Character Container - Deferred Loading */}
                         <DeferredSpline />
                     </div>
