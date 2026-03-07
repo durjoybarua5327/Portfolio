@@ -6,7 +6,6 @@ import Section from "@/components/ui/Section";
 import Button from "@/components/ui/Button";
 import { motion } from "framer-motion";
 import { ArrowRight, Download, Github, Linkedin, Twitter } from "lucide-react";
-import Spline from '@splinetool/react-spline';
 
 import { HeroData, ContactSettings } from "@/types";
 
@@ -26,42 +25,22 @@ export default function Hero({ hero, contact }: { hero?: HeroData, contact?: Con
                 {/* Left Column: Text */}
                 <div className="flex flex-col items-start text-left order-2 md:order-1">
 
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5 }}
-                        className="mb-6 inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md"
-                    >
+                    <div className="mb-6 inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md animate-fade-in-up">
                         <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
                         <span className="text-xs sm:text-sm font-medium text-primary-foreground/80 text-white">
                             {hero.role_text || "Software Developer • Web & Mobile Specialist"}
                         </span>
-                    </motion.div>
+                    </div>
 
-                    <motion.h1
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5, delay: 0.1 }}
-                        className="text-2xl xs:text-3xl sm:text-4xl md:text-6xl 3xl:text-7xl 4xl:text-8xl font-bold tracking-tight mb-4 leading-tight break-words"
-                    >
+                    <h1 className="text-2xl xs:text-3xl sm:text-4xl md:text-6xl 3xl:text-7xl 4xl:text-8xl font-bold tracking-tight mb-4 leading-tight break-words animate-fade-in-up [animation-delay:100ms]">
                         {hero.headline_prefix} <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">{hero.headline_highlight}</span> {hero.headline_suffix}
-                    </motion.h1>
+                    </h1>
 
-                    <motion.p
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5, delay: 0.2 }}
-                        className="text-sm sm:text-base md:text-lg 3xl:text-xl 4xl:text-2xl text-muted-foreground mb-8 max-w-xl 3xl:max-w-2xl 4xl:max-w-3xl leading-relaxed"
-                    >
+                    <p className="text-sm sm:text-base md:text-lg 3xl:text-xl 4xl:text-2xl text-muted-foreground mb-8 max-w-xl 3xl:max-w-2xl 4xl:max-w-3xl leading-relaxed animate-fade-in-up [animation-delay:200ms]">
                         {hero.description}
-                    </motion.p>
+                    </p>
 
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5, delay: 0.3 }}
-                        className="flex flex-col sm:flex-row gap-4 items-center w-full sm:w-auto"
-                    >
+                    <div className="flex flex-col sm:flex-row gap-4 items-center w-full sm:w-auto animate-fade-in-up [animation-delay:300ms]">
                         <Button size="lg" className="w-full sm:w-auto h-11" onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}>
                             Contact Me <ArrowRight className="ml-2 w-4 h-4" />
                         </Button>
@@ -79,7 +58,7 @@ export default function Hero({ hero, contact }: { hero?: HeroData, contact?: Con
                                 </Button>
                             </a>
                         )}
-                    </motion.div>
+                    </div>
 
                     {/* Socials */}
                     {contact && (
@@ -128,7 +107,7 @@ export default function Hero({ hero, contact }: { hero?: HeroData, contact?: Con
                     className="relative mx-auto md:ml-auto w-full max-w-lg 3xl:max-w-xl 4xl:max-w-2xl h-[300px] sm:h-[400px] md:h-[450px] lg:h-[600px] 3xl:h-[700px] 4xl:h-[800px] order-1 md:order-2"
                 >
                     {/* Glowing Card Effect */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-accent/20 rounded-3xl blur-2xl -z-10 transfom translate-y-4" />
+                    <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-accent/20 rounded-3xl blur-2xl -z-10 transform translate-y-4" />
 
                     <div className="relative h-full w-full rounded-3xl overflow-hidden bg-white/5 backdrop-blur-sm border border-white/10 group">
                         {/* 3D Character Container - Deferred Loading */}
@@ -166,9 +145,14 @@ function DeferredSpline() {
     }
 
     return (
-        <Spline
-            scene="https://prod.spline.design/iK04YtppWNdQZkB3OJUGbYO6/scene.splinecode"
+        <iframe
+            src='https://my.spline.design/genkubgreetingrobot-iK04YtppWNdQZkB3OJUGbYO6/'
+            frameBorder='0'
+            width='100%'
+            height='100%'
             className="w-full h-full pointer-events-auto"
-        />
+            title="3D Robot"
+            loading="lazy"
+        ></iframe>
     );
 }

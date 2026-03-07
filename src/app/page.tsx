@@ -1,27 +1,9 @@
-import dynamic from 'next/dynamic';
 import Hero from "@/components/sections/Hero";
-
-// Dynamic imports for sections below the fold to improve TBT and FCP
-const About = dynamic(() => import("@/components/sections/About"), { 
-  ssr: true,
-  loading: () => <div className="h-[400px] w-full animate-pulse bg-white/5 rounded-3xl" />
-});
-const Skills = dynamic(() => import("@/components/sections/Skills"), { 
-  ssr: true,
-  loading: () => <div className="h-[400px] w-full animate-pulse bg-white/5 rounded-3xl" />
-});
-const Projects = dynamic(() => import("@/components/sections/Projects"), { 
-  ssr: true,
-  loading: () => <div className="h-[600px] w-full animate-pulse bg-white/5 rounded-3xl" />
-});
-const Experience = dynamic(() => import("@/components/sections/Experience"), { 
-  ssr: true,
-  loading: () => <div className="h-[400px] w-full animate-pulse bg-white/5 rounded-3xl" />
-});
-const Contact = dynamic(() => import("@/components/sections/Contact"), { 
-  ssr: true,
-  loading: () => <div className="h-[400px] w-full animate-pulse bg-white/5 rounded-3xl" />
-});
+import About from "@/components/sections/About";
+import Skills from "@/components/sections/Skills";
+import Projects from "@/components/sections/Projects";
+import Experience from "@/components/sections/Experience";
+import Contact from "@/components/sections/Contact";
 import { supabase } from "@/lib/supabase";
 import { Project, Skill, Experience as ExperienceType, About as AboutType, HeroData, ContactSettings } from "@/types";
 
@@ -66,7 +48,6 @@ async function getData() {
     }
     if (heroRes.error && heroRes.error.code !== 'PGRST116') {
       console.error("Hero Error:", heroRes.error);
-      // We don't throw here to allow partial data, but logging is crucial
     }
 
     // Default About if missing from DB

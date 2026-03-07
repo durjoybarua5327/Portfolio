@@ -1,10 +1,9 @@
-
 "use client";
 
 import Section from "@/components/ui/Section";
 import { Skill } from "@/types";
 import { motion } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 interface SkillsProps {
@@ -17,6 +16,8 @@ interface SkillsProps {
  * the technology's common display name.
  */
 const getIconSlug = (name: string) => {
+    if (!name) return 'react'; // Safely handle missing names
+
     const commonMappings: Record<string, string> = {
         'Neon': 'neondottech',
         'CSS3': 'css3',
@@ -58,6 +59,9 @@ const getIconSlug = (name: string) => {
 };
 
 export default function Skills({ skills }: SkillsProps) {
+    // Array to track which skill icons have failed to load
+    const [failedIcons, setFailedIcons] = useState<Record<string, boolean>>({});
+
     // Group skills by category
     const categories = {
         Frontend: skills.filter(s => s.category === 'frontend'),
@@ -176,7 +180,7 @@ export default function Skills({ skills }: SkillsProps) {
 
                                     {/* Skills grid */}
                                     <div className="grid grid-cols-2 lg:grid-cols-3 3xl:grid-cols-4 4xl:grid-cols-5 gap-3 flex-1 overflow-hidden">
-                                        {categorySkills.map((skill, skillIdx) => (
+                                        {categorySkills.map((skill) => (
                                             <div
                                                 key={skill.id}
                                                 className="group/skill relative transition-transform duration-300 hover:scale-105"
@@ -189,21 +193,21 @@ export default function Skills({ skills }: SkillsProps) {
                                                     <div className="relative flex flex-col items-center gap-2">
                                                         {/* Icon container */}
                                                         <div className="w-10 h-10 flex items-center justify-center bg-gradient-to-br from-white/10 to-white/5 rounded-lg group-hover/skill:scale-110 transition-transform duration-300 shadow-lg">
-                                                            <img
-                                                                src={`https://cdn.simpleicons.org/${getIconSlug(skill.name)}`}
-                                                                alt={skill.name}
-                                                                className="w-5 h-5 opacity-80 group-hover/skill:opacity-100 transition-opacity filter invert dark:invert-0"
-                                                                loading="lazy"
-                                                                onError={(e) => {
-                                                                    const target = e.target as HTMLImageElement;
-                                                                    target.style.display = 'none';
-                                                                    // Show first letter as fallback
-                                                                    const fallback = document.createElement('div');
-                                                                    fallback.className = 'text-lg font-bold text-primary';
-                                                                    fallback.textContent = skill.name.charAt(0);
-                                                                    target.parentElement?.appendChild(fallback);
-                                                                }}
-                                                            />
+                                                            {!failedIcons[skill.id] ? (
+                                                                <img
+                                                                    src={`https://cdn.simpleicons.org/${getIconSlug(skill.name)}`}
+                                                                    alt={skill.name}
+                                                                    className="w-5 h-5 opacity-80 group-hover/skill:opacity-100 transition-opacity filter invert dark:invert-0"
+                                                                    loading="lazy"
+                                                                    onError={() => {
+                                                                        setFailedIcons(prev => ({ ...prev, [skill.id]: true }));
+                                                                    }}
+                                                                />
+                                                            ) : (
+                                                                <div className="text-lg font-bold text-primary">
+                                                                    {skill.name.charAt(0)}
+                                                                </div>
+                                                            )}
                                                         </div>
 
                                                         {/* Skill name */}
