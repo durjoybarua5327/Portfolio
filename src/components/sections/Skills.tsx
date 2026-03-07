@@ -11,6 +11,52 @@ interface SkillsProps {
     skills: Skill[];
 }
 
+/**
+ * Maps technology names to their correct Simple Icons slugs.
+ * Simple Icons has specific naming conventions that often don't match 
+ * the technology's common display name.
+ */
+const getIconSlug = (name: string) => {
+    const commonMappings: Record<string, string> = {
+        'Neon': 'neondottech',
+        'CSS3': 'css3',
+        'Express.js': 'express',
+        'Express': 'express',
+        'React Native': 'react', // SimpleIcons uses 'react' for RN as well usually
+        'Next.js': 'nextdotjs',
+        'Node.js': 'nodedotjs',
+        'TailwindCSS': 'tailwindcss',
+        'Tailwind CSS': 'tailwindcss',
+        'PostgreSQL': 'postgresql',
+        'Postgres': 'postgresql',
+        'MongoDB': 'mongodb',
+        'Docker': 'docker',
+        'AWS': 'amazonaws',
+        'Azure': 'microsoftazure',
+        'GCP': 'googlecloud',
+        'Firebase': 'firebase',
+        'Supabase': 'supabase',
+        'Vite': 'vite',
+        'Redux': 'redux',
+        'GraphQL': 'graphql',
+        'Apollo': 'apollographql',
+        'Prisma': 'prisma',
+        'Drizzle': 'drizzle',
+        'Figma': 'figma',
+        'Git': 'git',
+        'GitHub': 'github',
+        'VS Code': 'visualstudiocode',
+    };
+
+    if (commonMappings[name]) return commonMappings[name];
+
+    // Generic fallback: lowercase, replace dots with 'dot', remove spaces
+    return name.toLowerCase()
+        .replace(/\./g, 'dot')
+        .replace(/\s+/g, '')
+        .replace(/\+/g, 'plus');
+};
+
 export default function Skills({ skills }: SkillsProps) {
     // Group skills by category
     const categories = {
@@ -129,18 +175,14 @@ export default function Skills({ skills }: SkillsProps) {
                                     </div>
 
                                     {/* Skills grid */}
-                                    <div className="grid grid-cols-2 lg:grid-cols-3 3xl:grid-cols-4 4xl:grid-cols-5 gap-3 flex-1">
+                                    <div className="grid grid-cols-2 lg:grid-cols-3 3xl:grid-cols-4 4xl:grid-cols-5 gap-3 flex-1 overflow-hidden">
                                         {categorySkills.map((skill, skillIdx) => (
-                                            <motion.div
+                                            <div
                                                 key={skill.id}
-                                                initial={{ opacity: 0, scale: 0.8 }}
-                                                whileInView={{ opacity: 1, scale: 1 }}
-                                                viewport={{ once: true }}
-                                                transition={{ delay: idx * 0.15 + skillIdx * 0.05 }}
-                                                className="group/skill relative"
+                                                className="group/skill relative transition-transform duration-300 hover:scale-105"
                                             >
-                                                {/* Skill card */}
-                                                <div className="relative bg-white/5 hover:bg-white/10 rounded-xl p-2 border border-white/5 hover:border-primary/30 transition-all duration-300 cursor-pointer overflow-hidden">
+                                                {/* Skill card - Static for performance, hover effects handled by CSS */}
+                                                <div className="relative bg-white/5 hover:bg-white/10 rounded-xl p-2 border border-white/5 hover:border-primary/30 transition-all duration-300 cursor-pointer overflow-hidden h-full">
                                                     {/* Hover gradient effect */}
                                                     <div className={`absolute inset-0 bg-gradient-to-br ${categoryColors[category as keyof typeof categoryColors]} opacity-0 group-hover/skill:opacity-10 transition-opacity duration-300`} />
 
@@ -148,9 +190,10 @@ export default function Skills({ skills }: SkillsProps) {
                                                         {/* Icon container */}
                                                         <div className="w-10 h-10 flex items-center justify-center bg-gradient-to-br from-white/10 to-white/5 rounded-lg group-hover/skill:scale-110 transition-transform duration-300 shadow-lg">
                                                             <img
-                                                                src={`https://cdn.simpleicons.org/${skill.name.toLowerCase().replace(/\./g, 'dot').replace(/\s/g, '').replace(/\+/g, 'plus')}`}
+                                                                src={`https://cdn.simpleicons.org/${getIconSlug(skill.name)}`}
                                                                 alt={skill.name}
                                                                 className="w-5 h-5 opacity-80 group-hover/skill:opacity-100 transition-opacity filter invert dark:invert-0"
+                                                                loading="lazy"
                                                                 onError={(e) => {
                                                                     const target = e.target as HTMLImageElement;
                                                                     target.style.display = 'none';
@@ -169,7 +212,7 @@ export default function Skills({ skills }: SkillsProps) {
                                                         </span>
                                                     </div>
                                                 </div>
-                                            </motion.div>
+                                            </div>
                                         ))}
                                     </div>
                                 </div>

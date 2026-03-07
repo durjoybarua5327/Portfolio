@@ -62,7 +62,11 @@ export default function BackgroundParticles() {
 
         const init = () => {
             particles = [];
-            const particleCount = Math.min(window.innerWidth * 0.15, 300); // Increased responsive count
+            const isMobile = window.innerWidth < 768;
+            // Dramatically reduce particles on mobile to save battery and main-thread work
+            const baseCount = isMobile ? 40 : 100;
+            const particleCount = Math.min(window.innerWidth * 0.05, baseCount); 
+            
             for (let i = 0; i < particleCount; i++) {
                 particles.push(new Particle());
             }
@@ -77,8 +81,19 @@ export default function BackgroundParticles() {
             animationFrameId = requestAnimationFrame(animate);
         };
 
-        init();
-        animate();
+        // Use requestIdleCallback or a delay to not block initial hydration/LCP
+        const startEffect = () => {
+            init();
+            animate();
+        };
+
+        if ('requestIdleCallback' in window) {
+            (window as any).requestIdleCallback(() => {
+                setTimeout(startEffect, 2000); // 2s delay even after idle
+            });
+        } else {
+            setTimeout(startEffect, 3000);
+        }
 
         return () => {
             window.removeEventListener("resize", resizeCanvas);

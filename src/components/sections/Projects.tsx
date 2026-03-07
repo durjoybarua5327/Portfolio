@@ -133,7 +133,6 @@ export default function Projects({ projects }: ProjectsProps) {
 
             <div className="relative w-full max-w-5xl 3xl:max-w-7xl 4xl:max-w-screen-2xl mx-auto px-4 group/carousel">
                 {/* Navigation Arrows */}
-                {/* Navigation Arrows */}
                 <button
                     onClick={() => scroll('left')}
                     className="absolute left-1 md:left-0 top-1/2 -translate-y-1/2 md:-translate-x-12 z-20 w-8 h-8 md:w-10 md:h-10 rounded-full bg-background/80 border border-primary/20 text-primary hover:bg-primary/10 hover:border-primary/50 transition-all flex items-center justify-center opacity-100 md:opacity-0 md:group-hover/carousel:opacity-100 disabled:opacity-50"
@@ -159,17 +158,12 @@ export default function Projects({ projects }: ProjectsProps) {
                     onClickCapture={handleClickCapture}
                 >
                     {projects.map((project, index) => (
-                        <motion.div
+                        <div
                             key={project.id || index}
-                            initial={{ opacity: 0, y: 50 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: index * 0.1, duration: 0.5 }}
-                            className="relative min-w-[85vw] sm:min-w-[calc(50%-12px)] lg:min-w-[calc(33.333%-16px)] 3xl:min-w-[calc(25%-18px)] 4xl:min-w-[calc(20%-20px)] snap-center sm:snap-start group h-full flex flex-col min-h-[340px] md:min-h-[400px]"
+                            className="relative min-w-[85vw] sm:min-w-[calc(50%-12px)] lg:min-w-[calc(33.333%-16px)] 3xl:min-w-[calc(25%-18px)] 4xl:min-w-[calc(20%-20px)] snap-center sm:snap-start group h-full flex flex-col min-h-[340px] md:min-h-[400px] transition-all duration-500"
                         >
-
-                            {/* Animated circulating gradient border - Reverse Spin with Page Colors */}
-                            <div className="absolute -inset-[1px] rounded-2xl opacity-50 group-hover:opacity-100 blur-sm transition duration-500 overflow-hidden">
+                            {/* Animated circulating gradient border - Only visible on hover/focus for performance */}
+                            <div className="absolute -inset-[1px] rounded-2xl opacity-0 group-hover:opacity-100 blur-[2px] transition duration-500 overflow-hidden">
                                 <div
                                     className="absolute inset-0 animate-spin-slow"
                                     style={{
@@ -184,10 +178,10 @@ export default function Projects({ projects }: ProjectsProps) {
                             <div className="absolute inset-[1px] bg-background rounded-2xl" />
 
                             {/* Card Content */}
-                            <div className="relative flex-1 glass-card rounded-2xl overflow-hidden border border-white/10 hover:border-white/20 transition-all duration-300 flex flex-col bg-background/50 backdrop-blur-xl z-10 pointer-events-auto">
+                            <div className="relative flex-1 glass-card rounded-2xl overflow-hidden border border-white/10 hover:border-primary/30 transition-all duration-300 flex flex-col bg-background/50 z-10 pointer-events-auto">
 
                                 {/* Image / Preview Area */}
-                                <div className="relative h-32 sm:h-40 w-full bg-black/5 overflow-hidden group-hover:from-primary/20 group-hover:to-accent/20 transition-colors duration-500">
+                                <div className="relative h-32 sm:h-40 w-full bg-black/5 overflow-hidden transition-colors duration-500">
                                     {project.image_url ? (
                                         <Image
                                             src={project.image_url}
@@ -196,6 +190,7 @@ export default function Projects({ projects }: ProjectsProps) {
                                             className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
                                             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                                             draggable={false}
+                                            loading="lazy"
                                         />
                                     ) : (
                                         <div className="absolute inset-0 flex items-center justify-center text-muted-foreground z-0">
@@ -257,7 +252,7 @@ export default function Projects({ projects }: ProjectsProps) {
                                     </div>
                                 </div>
                             </div>
-                        </motion.div>
+                        </div>
                     ))}
                 </div>
             </div>

@@ -72,11 +72,11 @@
 /* Utilities */
 @layer components {
   .glass {
-    @apply bg-white/5 backdrop-blur-lg border border-white/10;
+    @apply bg-white/5 backdrop-blur-md border border-white/10;
   }
 
   .glass-card {
-    @apply bg-[#11121C]/80 backdrop-blur-xl border border-white/5 shadow-2xl;
+    @apply bg-[#11121C]/80 backdrop-blur-md border border-white/5 shadow-2xl;
   }
 
   .text-gradient {
@@ -85,6 +85,7 @@
 
   .animate-spin-slow {
     animation: spin-slow 3s linear infinite;
+    will-change: transform;
   }
 
   @keyframes spin-slow {

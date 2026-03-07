@@ -1,5 +1,7 @@
 "use client";
 
+import React from "react";
+
 import Section from "@/components/ui/Section";
 import Button from "@/components/ui/Button";
 import { motion } from "framer-motion";
@@ -128,22 +130,45 @@ export default function Hero({ hero, contact }: { hero?: HeroData, contact?: Con
                     {/* Glowing Card Effect */}
                     <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-accent/20 rounded-3xl blur-2xl -z-10 transfom translate-y-4" />
 
-                    <div className="relative h-full w-full rounded-3xl overflow-hidden bg-transparent group">
-                        {/* 3D Character Container */}
-                        <div className="absolute inset-0 w-full h-full">
-                            <iframe
-                                src='https://my.spline.design/genkubgreetingrobot-iK04YtppWNdQZkB3OJUGbYO6/'
-                                frameBorder='0'
-                                width='100%'
-                                height='100%'
-                                className="w-full h-full pointer-events-auto"
-                                title="3D Robot"
-                            ></iframe>
-                        </div>
+                    <div className="relative h-full w-full rounded-3xl overflow-hidden bg-white/5 backdrop-blur-sm border border-white/10 group">
+                        {/* 3D Character Container - Deferred Loading */}
+                        <DeferredSpline />
                     </div>
                 </motion.div>
             </div>
 
         </Section>
+    );
+}
+
+/**
+ * Deferred loading of the Spline iframe to improve TBT and LCP.
+ * Loads 1 second after component mount to ensure main thread is free.
+ */
+function DeferredSpline() {
+    const [shouldLoad, setShouldLoad] = React.useState(false);
+
+    React.useEffect(() => {
+        // Delay heavy 3D loading by 1.5s to give the main thread time to breathe
+        const timer = setTimeout(() => setShouldLoad(true), 1500);
+        return () => clearTimeout(timer);
+    }, []);
+
+    if (!shouldLoad) {
+        return (
+            <div className="absolute inset-0 flex items-center justify-center">
+                <div className="flex flex-col items-center gap-4">
+                    <div className="w-12 h-12 border-4 border-primary/20 border-t-primary rounded-full animate-spin" />
+                    <span className="text-white/50 text-sm font-medium">Initializing 3D Experience...</span>
+                </div>
+            </div>
+        );
+    }
+
+    return (
+        <Spline
+            scene="https://prod.spline.design/iK04YtppWNdQZkB3OJUGbYO6/scene.splinecode"
+            className="w-full h-full pointer-events-auto"
+        />
     );
 }
